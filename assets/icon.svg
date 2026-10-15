@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- The E2e4.Chess base icon: a dark frame, a 4x4 board with the corner squares highlighted, and a centred pawn.
      Every E2e4.Chess package icon is this base plus one badge (see badges/ and Build-Icons.ps1), so they read as one family.
      Only rect, circle, ellipse and path elements with fill, fill-opacity, stroke, stroke-width, stroke-linejoin and
