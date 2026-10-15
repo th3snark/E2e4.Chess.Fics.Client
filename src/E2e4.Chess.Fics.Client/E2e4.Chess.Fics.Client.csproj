@@ -6,6 +6,7 @@
     <Product>E2e4 FICS Client</Product>
     <Description>Cross-platform client library for the Free Internet Chess Server (FICS): framing, typed message parsing, style-12 boards and an optional pluggable timeseal codec. Unofficial; not affiliated with FICS.</Description>
     <PackageTags>chess;fics;freechess;telnet;style12;timeseal</PackageTags>
+    <PackageReleaseNotes>1.0.0: first release, split out of https://github.com/th3snark/E2e4.Chess. A FICS client for .NET 10: System.IO.Pipelines framing (with optional block mode), a typed message parser, style-12 board parsing, IFicsClient and IFicsClientFactory with dependency injection (AddFicsClient), a TCP transport behind an IFicsTransport seam, and an optional pluggable timeseal codec (ITimesealCodec; the package has no GPL dependency). Outbound lines containing CR, LF or NUL are rejected, inbound lines have length caps, and optional ILogger output never includes raw lines or passwords.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
