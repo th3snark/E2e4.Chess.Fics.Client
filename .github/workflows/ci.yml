@@ -30,9 +30,9 @@ jobs:
           cache-dependency-path: Directory.Packages.props
       - name: Check formatting
         if: runner.os == 'Windows'
-        run: dotnet format whitespace FicsClient.slnx --verify-no-changes
+        run: dotnet format whitespace E2e4.Chess.Fics.Client.slnx --verify-no-changes
       - name: Test
-        run: dotnet test FicsClient.slnx --configuration Release
+        run: dotnet test E2e4.Chess.Fics.Client.slnx --configuration Release
       - name: No GPL dependency (OpenSeal) in the library
         if: runner.os == 'Linux'
         run: |

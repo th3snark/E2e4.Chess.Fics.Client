@@ -52,7 +52,7 @@ Do not reference `E2e4.Chess.OpenSeal` from a library you want to keep permissiv
 ## Build and test
 
 ```
-dotnet test FicsClient.slnx
+dotnet test E2e4.Chess.Fics.Client.slnx
 ```
 
 See [SECURITY.md](https://github.com/th3snark/E2e4.Chess.Fics.Client/blob/master/SECURITY.md) to report a vulnerability.

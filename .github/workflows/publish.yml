@@ -25,7 +25,7 @@ jobs:
             exit 1
           fi
       - name: Test
-        run: dotnet test FicsClient.slnx --configuration Release
+        run: dotnet test E2e4.Chess.Fics.Client.slnx --configuration Release
       - name: Pack
         run: dotnet pack src/E2e4.Chess.Fics.Client/E2e4.Chess.Fics.Client.csproj --configuration Release -p:Version=${GITHUB_REF_NAME#v} --output artifacts
       # Request the temporary key last: it is valid for one hour.

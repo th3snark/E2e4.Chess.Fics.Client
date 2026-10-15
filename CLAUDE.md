@@ -10,10 +10,10 @@ split out of <https://github.com/th3snark/E2e4.Chess> (MIT), which is its only k
 ## Commands
 
 ```
-dotnet test FicsClient.slnx                                    # build + all tests (CI uses --configuration Release)
+dotnet test E2e4.Chess.Fics.Client.slnx                                    # build + all tests (CI uses --configuration Release)
 dotnet test tests/E2e4.Chess.Fics.Client.Test --filter "FullyQualifiedName~FicsFrameTokenizer"
 dotnet pack src/E2e4.Chess.Fics.Client/E2e4.Chess.Fics.Client.csproj --configuration Release
-dotnet format whitespace FicsClient.slnx --verify-no-changes   # CRLF line endings; CI runs it on Windows
+dotnet format whitespace E2e4.Chess.Fics.Client.slnx --verify-no-changes   # CRLF line endings; CI runs it on Windows
 ```
 
 Releases: push a `vX.Y.Z` tag; `publish.yml` tests, packs with `-p:Version=<tag minus v>` and pushes to nuget.org with Trusted
