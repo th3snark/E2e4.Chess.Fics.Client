@@ -19,14 +19,14 @@ use session; long-lived services should inject the factory and dispose each clie
 
 ## Licence
 
-MIT, see [LICENSE](https://github.com/th3snark/FicsClient/blob/master/LICENSE). The library has no dependency on any GPL
+MIT, see [LICENSE](https://github.com/th3snark/E2e4.Chess.Fics.Client/blob/master/LICENSE). The library has no dependency on any GPL
 code. Timeseal is optional and plugs in through `ITimesealCodec` (`FicsClientOptions.Timeseal`); leave it null to send plain lines.
-The test fixtures are synthetic; see [NOTICE](https://github.com/th3snark/FicsClient/blob/master/NOTICE).
+The test fixtures are synthetic; see [NOTICE](https://github.com/th3snark/E2e4.Chess.Fics.Client/blob/master/NOTICE).
 
 ### Using timeseal
 
 The timeseal cipher is GPL v2 or later and lives in a separate package,
-[E2e4.Chess.OpenSeal](https://github.com/th3snark/OpenSeal). **An application that includes that package is distributed under
+[E2e4.Chess.OpenSeal](https://github.com/th3snark/E2e4.Chess.OpenSeal). **An application that includes that package is distributed under
 the GPL.** If you accept that, the adapter is one line:
 
 ```csharp
@@ -55,4 +55,4 @@ Do not reference `E2e4.Chess.OpenSeal` from a library you want to keep permissiv
 dotnet test FicsClient.slnx
 ```
 
-See [SECURITY.md](https://github.com/th3snark/FicsClient/blob/master/SECURITY.md) to report a vulnerability.
+See [SECURITY.md](https://github.com/th3snark/E2e4.Chess.Fics.Client/blob/master/SECURITY.md) to report a vulnerability.

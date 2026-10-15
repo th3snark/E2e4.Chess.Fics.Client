@@ -9,8 +9,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/th3snark/FicsClient</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/th3snark/FicsClient</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/th3snark/E2e4.Chess.Fics.Client</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/th3snark/E2e4.Chess.Fics.Client</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
