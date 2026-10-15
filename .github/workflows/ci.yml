@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-26.04, windows-latest]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+          cache: true
+          cache-dependency-path: Directory.Packages.props
+      - name: Check formatting
+        if: runner.os == 'Windows'
+        run: dotnet format whitespace FicsClient.slnx --verify-no-changes
+      - name: Test
+        run: dotnet test FicsClient.slnx --configuration Release
+      - name: No GPL dependency (OpenSeal) in the library
+        if: runner.os == 'Linux'
+        run: |
+          if dotnet list src/E2e4.Chess.Fics.Client/E2e4.Chess.Fics.Client.csproj package --include-transitive | grep -i openseal; then
+            echo "The library must not depend on E2e4.Chess.OpenSeal (GPL)."
+            exit 1
+          fi
+      - name: Pack
+        run: dotnet pack src/E2e4.Chess.Fics.Client/E2e4.Chess.Fics.Client.csproj --configuration Release --no-build

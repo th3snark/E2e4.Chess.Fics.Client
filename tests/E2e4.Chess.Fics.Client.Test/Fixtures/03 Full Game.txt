@@ -1,0 +1,211 @@
+﻿
+. Connected to fics.example.invalid:5000
+. Sent the OpenSeal hello message
+
+
+   ****** Welcome to a synthetic FICS-style server ******
+
+Webpage: https://example.invalid
+Server version : test
+
+      Enter guest or a unique ID.
+
+login: guest
+. Sending '3489182: guest
+'
+
+Logging you in as "GuestONES"; you may use this name to play unrated games.
+
+Press return to enter the server as "GuestONES":
+
+. Sending '3491838: 
+'
+??
+
+**** Starting FICS session as GuestONES(U) ****
+------------------------------------------------------------------------------
+                         *** Message Of The Day ***
+
+This is a synthetic message of the day for the test fixtures.
+
+==============================================================================
+
+Newcomers:
+  type 'getgame' to get a blitz chess game.
+
+fics% 
+TestBot(*)(TD) tells you: This is a synthetic line for the test fixtures.
+\   It continues on a second line, as long tells do.
+fics% 
+GuestTWOS (++++) seeking 5 0 unrated blitz ("play 5" to respond)
+fics% 
+GuestTHRE (++++) seeking 15 0 unrated standard ("play 132" to respond)
+fics% set seek 0
+. Sending '3497214: set seek 0
+'
+You will not see seek ads.
+fics% match guestFOUR 30 0
+. Sending '3560341: match guestFOUR 30 0
+'
+Issuing: GuestONES (----) GuestFOUR (----) unrated standard 30 0.
+fics% 
+GuestFOUR accepts the match offer.
+
+Creating: GuestONES (++++) GuestFOUR (++++) unrated standard 30 0
+{Game 384 (GuestONES vs. GuestFOUR) Creating unrated standard match.}
+
+Game 384 (GuestONES vs. GuestFOUR)
+
+       ---------------------------------
+    8  | *R| *N| *B| *Q| *K| *B| *N| *R|     Move # : 1 (White)
+       |---+---+---+---+---+---+---+---|
+    7  | *P| *P| *P| *P| *P| *P| *P| *P|
+       |---+---+---+---+---+---+---+---|
+    6  |   |   |   |   |   |   |   |   |
+       |---+---+---+---+---+---+---+---|
+    5  |   |   |   |   |   |   |   |   |     Black Clock : 30:00
+       |---+---+---+---+---+---+---+---|
+    4  |   |   |   |   |   |   |   |   |     White Clock : 30:00
+       |---+---+---+---+---+---+---+---|
+    3  |   |   |   |   |   |   |   |   |     Black Strength : 39
+       |---+---+---+---+---+---+---+---|
+    2  | P | P | P | P | P | P | P | P |     White Strength : 39
+       |---+---+---+---+---+---+---+---|
+    1  | R | N | B | Q | K | B | N | R |
+       ---------------------------------
+         a   b   c   d   e   f   g   h
+fics% set style 12
+. Sending '3573918: set style 12
+'
+Style 12 set.
+fics% e4
+. Sending '3582200: e4
+'
+
+<12> rnbqkbnr pppppppp -------- -------- ----P--- -------- PPPP-PPP RNBQKBNR B 4 1 1 1 1 0 384 GuestONES GuestFOUR -1 30 0 39 39 1800 1800 1 P/e2-e4 (0:00) e4 0 0 0
+fics% 
+<12> rnbqkbnr -ppppppp p------- -------- ----P--- -------- PPPP-PPP RNBQKBNR W -1 1 1 1 1 0 384 GuestONES GuestFOUR 1 30 0 39 39 1800 1800 2 P/a7-a6 (0:00) a6 0 1 0
+
+[G]
+fics% e5
+. Sending '3596060: e5
+'
+
+<12> rnbqkbnr -ppppppp p------- ----P--- -------- -------- PPPP-PPP RNBQKBNR B -1 1 1 1 1 0 384 GuestONES GuestFOUR -1 30 0 39 39 1800 1800 2 P/e4-e5 (0:00) e5 0 1 7151
+fics% 
+<12> rnbqkbnr -pp-pppp p------- ---pP--- -------- -------- PPPP-PPP RNBQKBNR W 3 1 1 1 1 0 384 GuestONES GuestFOUR 1 30 0 39 39 1800 1795 3 P/d7-d5 (0:05) d5 0 1 112
+
+[G]
+fics% ed
+. Sending '3609529: ed
+'
+
+<12> rnbqkbnr -pp-pppp p--P---- -------- -------- -------- PPPP-PPP RNBQKBNR B -1 1 1 1 1 0 384 GuestONES GuestFOUR -1 30 0 39 38 1800 1795 3 P/e5-d6 (0:00) exd6 0 1 8488
+fics% 
+<12> rnbqkbnr -pp--ppp p--p---- -------- -------- -------- PPPP-PPP RNBQKBNR W -1 1 1 1 1 0 384 GuestONES GuestFOUR 1 30 0 38 38 1800 1782 4 P/e7-d6 (0:13) exd6 0 1 124
+
+[G]
+fics% f5
+. Sending '3639810: f5
+'
+Illegal move (f5).
+
+<12> rnbqkbnr -pp--ppp p--p---- -------- -------- -------- PPPP-PPP RNBQKBNR W -1 1 1 1 1 0 384 GuestONES GuestFOUR 1 30 0 38 38 1800 1782 4 P/e7-d6 (0:13) exd6 0 1 0
+fics% g5
+. Sending '3653357: g5
+'
+Illegal move (g5).
+
+<12> rnbqkbnr -pp--ppp p--p---- -------- -------- -------- PPPP-PPP RNBQKBNR W -1 1 1 1 1 0 384 GuestONES GuestFOUR 1 30 0 38 38 1800 1782 4 P/e7-d6 (0:13) exd6 0 1 0
+fics% g4
+. Sending '3668404: g4
+'
+
+<12> rnbqkbnr -pp--ppp p--p---- -------- ------P- -------- PPPP-P-P RNBQKBNR B 6 1 1 1 1 0 384 GuestONES GuestFOUR -1 30 0 38 38 1800 1782 4 P/g2-g4 (0:00) g4 0 1 46062
+fics% 
+<12> rnbqkbnr -pp--ppp ---p---- p------- ------P- -------- PPPP-P-P RNBQKBNR W -1 1 1 1 1 0 384 GuestONES GuestFOUR 1 30 0 38 38 1800 1773 5 P/a6-a5 (0:10) a5 0 1 114
+
+[G]
+fics% g5
+. Sending '3685154: g5
+'
+
+<12> rnbqkbnr -pp--ppp ---p---- p-----P- -------- -------- PPPP-P-P RNBQKBNR B -1 1 1 1 1 0 384 GuestONES GuestFOUR -1 30 0 38 38 1800 1773 5 P/g4-g5 (0:00) g5 0 1 7074
+fics% 
+<12> rnbqk-nr -pp-bppp ---p---- p-----P- -------- -------- PPPP-P-P RNBQKBNR W -1 1 1 1 1 1 384 GuestONES GuestFOUR 1 30 0 38 38 1800 1768 6 B/f8-e7 (0:05) Be7 0 1 115
+
+[G]
+fics% h6
+. Sending '3696826: h6
+'
+Illegal move (h6).
+
+<12> rnbqk-nr -pp-bppp ---p---- p-----P- -------- -------- PPPP-P-P RNBQKBNR W -1 1 1 1 1 1 384 GuestONES GuestFOUR 1 30 0 38 38 1800 1768 6 B/f8-e7 (0:05) Be7 0 1 0
+fics% h3
+. Sending '3702748: h3
+'
+
+<12> rnbqk-nr -pp-bppp ---p---- p-----P- -------- -------P PPPP-P-- RNBQKBNR B -1 1 1 1 1 0 384 GuestONES GuestFOUR -1 30 0 38 38 1800 1768 6 P/h2-h3 (0:00) h3 0 1 12972
+fics% 
+<12> rnbqk-nr -pp--ppp ---p-b-- p-----P- -------- -------P PPPP-P-- RNBQKBNR W -1 1 1 1 1 1 384 GuestONES GuestFOUR 1 30 0 38 38 1800 1764 7 B/e7-f6 (0:04) Bf6 0 1 107
+
+[G]
+fics% h4
+. Sending '3711255: h4
+'
+
+<12> rnbqk-nr -pp--ppp ---p-b-- p-----P- -------P -------- PPPP-P-- RNBQKBNR B -1 1 1 1 1 0 384 GuestONES GuestFOUR -1 30 0 38 38 1799 1764 7 P/h3-h4 (0:00) h4 0 1 4154
+fics% 
+<12> rnbqk--r -pp--ppp ---p-b-n p-----P- -------P -------- PPPP-P-- RNBQKBNR W -1 1 1 1 1 1 384 GuestONES GuestFOUR 1 30 0 38 38 1799 1753 8 N/g8-h6 (0:11) Nh6 0 1 120
+
+[G]
+fics% g6
+. Sending '3735172: g6
+'
+
+<12> rnbqk--r -pp--ppp ---p-bPn p------- -------P -------- PPPP-P-- RNBQKBNR B -1 1 1 1 1 0 384 GuestONES GuestFOUR -1 30 0 38 38 1799 1753 8 P/g5-g6 (0:00) g6 0 1 12418
+fics% 
+<12> rnbq-rk- -pp--ppp ---p-bPn p------- -------P -------- PPPP-P-- RNBQKBNR W -1 1 1 0 0 1 384 GuestONES GuestFOUR 1 30 0 38 38 1799 1747 9 o-o (0:06) O-O 0 1 113
+
+[G]
+fics% gh
+. Sending '3756393: gh
+'
+
+<12> rnbq-rk- -pp--ppP ---p-b-n p------- -------P -------- PPPP-P-- RNBQKBNR B -1 1 1 0 0 0 384 GuestONES GuestFOUR -1 30 0 38 37 1799 1747 9 P/g6-h7 (0:00) gxh7+ 0 1 15089
+fics% 
+<12> rnbq-r-k -pp--ppP ---p-b-n p------- -------P -------- PPPP-P-- RNBQKBNR W -1 1 1 0 0 1 384 GuestONES GuestFOUR 1 30 0 38 37 1799 1742 10 K/g8-h8 (0:05) Kh8 0 1 115
+
+[G]
+fics% qe2
+. Sending '3775172: qe2
+'
+
+<12> rnbq-r-k -pp--ppP ---p-b-n p------- -------P -------- PPPPQP-- RNB-KBNR B -1 1 1 0 0 2 384 GuestONES GuestFOUR -1 30 0 38 37 1799 1742 10 Q/d1-e2 (0:00) Qe2 0 1 13444
+fics% 
+<12> rnbq-r-k -pp--p-P ---p-b-n p-----p- -------P -------- PPPPQP-- RNB-KBNR W 6 1 1 0 0 0 384 GuestONES GuestFOUR 1 30 0 38 37 1799 1738 11 P/g7-g5 (0:03) g5 0 1 115
+
+[G]
+fics% qe3
+. Sending '3784937: qe3
+'
+
+<12> rnbq-r-k -pp--p-P ---p-b-n p-----p- -------P ----Q--- PPPP-P-- RNB-KBNR B -1 1 1 0 0 1 384 GuestONES GuestFOUR -1 30 0 38 37 1799 1738 11 Q/e2-e3 (0:00) Qe3 0 1 6312
+fics% 
+<12> rnbq-r-- -pp--pkP ---p-b-n p-----p- -------P ----Q--- PPPP-P-- RNB-KBNR W -1 1 1 0 0 2 384 GuestONES GuestFOUR 1 30 0 38 37 1799 1735 12 K/h8-g7 (0:03) Kg7 0 1 116
+
+[G]
+fics% h8=b
+. Sending '3805844: h8=b
+'
+
+<12> rnbq-r-B -pp--pk- ---p-b-n p-----p- -------P ----Q--- PPPP-P-- RNB-KBNR B -1 1 1 0 0 0 384 GuestONES GuestFOUR -1 30 0 40 37 1799 1735 12 P/h7-h8=B (0:00) h8=B+ 0 1 17969
+fics% 
+<12> rnbq-r-k -pp--p-- ---p-b-n p-----p- -------P ----Q--- PPPP-P-- RNB-KBNR W -1 1 1 0 0 0 384 GuestONES GuestFOUR 1 30 0 37 37 1799 1726 13 K/g7-h8 (0:10) Kxh8 0 1 127
+
+[G]
+fics% 
+{Game 384 (GuestONES vs. GuestFOUR) GuestFOUR resigns} 1-0
+
+No ratings adjustment done.
+fics% 

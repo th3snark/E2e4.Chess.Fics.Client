@@ -1,0 +1,12 @@
+Copyright (c) 2026 GitHub: th3snark (E2e4).
+
+E2e4.Chess.Fics.Client is released under the MIT licence, see LICENSE. It has no dependency on GPL code: timeseal is
+supplied by the application through ITimesealCodec (see README.md).
+
+The files in tests/E2e4.Chess.Fics.Client.Test/Fixtures are synthetic. They keep the shape of FICS protocol traffic
+(style-12 board lines, game-end lines, [G] timeseal pings, login prompts), which is how the protocol works, and nothing
+else from a real session: the banner, message of the day, help text, other players' handles and contact details were
+replaced, and the guest handles are made up. They are released under the same MIT licence.
+
+"FICS" and "freechess.org" are used only to say which server this library talks to. This project is not affiliated with
+FICS or its administrators.

@@ -1,0 +1,39 @@
+name: Publish
+
+# Publishes E2e4.Chess.Fics.Client to nuget.org when a version tag is pushed, e.g. `git tag v1.0.0 && git push origin v1.0.0`.
+# Only push a tag when the owner says so. Uses nuget.org Trusted Publishing: no API key is stored. The policy on nuget.org must name this workflow file (publish.yml).
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write  # lets the job request a GitHub OIDC token for nuget.org
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      - name: Check the tag is a version
+        run: |
+          if ! [[ "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "Tag $GITHUB_REF_NAME is not of the form vX.Y.Z"
+            exit 1
+          fi
+      - name: Test
+        run: dotnet test FicsClient.slnx --configuration Release
+      - name: Pack
+        run: dotnet pack src/E2e4.Chess.Fics.Client/E2e4.Chess.Fics.Client.csproj --configuration Release -p:Version=${GITHUB_REF_NAME#v} --output artifacts
+      # Request the temporary key last: it is valid for one hour.
+      - name: NuGet login (OIDC to a temporary API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+      # Pushing the .nupkg also pushes the .snupkg symbol package beside it.
+      - name: NuGet push
+        run: dotnet nuget push artifacts/*.nupkg --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

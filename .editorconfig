@@ -1,0 +1,44 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.cs]
+indent_style = space
+indent_size = 4
+# Every file uses file-scoped namespaces; the build enforces it.
+csharp_style_namespace_declarations = file_scoped:warning
+
+# AnalysisLevel is latest-recommended (Directory.Build.props). These rules are downgraded to suggestions because
+# acting on them would cost more than it gains here:
+# - CS1591: documentation is written where it adds something, not on every self-describing member.
+# - CA1848, CA1873: LoggerMessage source generation and guarding argument evaluation for a handful of Debug/Warning calls.
+# - CA1711, CA1707: naming conventions that clash with ...EventHandler delegates and xUnit Test_Names.
+# - CA1861: constant array arguments, which only occur in test data.
+# - CA1822, CA1859: members kept as instance members / abstract return types on purpose.
+dotnet_diagnostic.CS1591.severity = suggestion
+dotnet_diagnostic.CA1848.severity = suggestion
+dotnet_diagnostic.CA1873.severity = suggestion
+dotnet_diagnostic.CA1711.severity = suggestion
+dotnet_diagnostic.CA1707.severity = suggestion
+dotnet_diagnostic.CA1861.severity = suggestion
+dotnet_diagnostic.CA1822.severity = suggestion
+dotnet_diagnostic.CA1859.severity = suggestion
+
+# Interfaces start with I.
+dotnet_naming_rule.interfaces_begin_with_i.severity = suggestion
+dotnet_naming_rule.interfaces_begin_with_i.symbols = interfaces
+dotnet_naming_rule.interfaces_begin_with_i.style = begins_with_i
+dotnet_naming_symbols.interfaces.applicable_kinds = interface
+dotnet_naming_style.begins_with_i.required_prefix = I
+dotnet_naming_style.begins_with_i.capitalization = pascal_case
+
+[*.{csproj,props,targets,proj,nuspec,config,slnx,yml}]
+indent_style = space
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
