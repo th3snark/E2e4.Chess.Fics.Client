@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 `E2e4.Chess.Fics.Client`: a cross-platform (`net10.0`) FICS (Free Internet Chess Server) client published as a NuGet package. It was
-split out of <https://github.com/th3snark/MyChess> (MIT), which is its only known consumer. MIT licence.
+split out of <https://github.com/th3snark/E2e4.Chess> (MIT), which is its only known consumer. MIT licence.
 
 ## Commands
 
@@ -42,7 +42,7 @@ Publishing. The csproj intentionally has no fixed `Version`. Do not tag or publi
 - Line endings are CRLF (`.editorconfig`). Write/Edit tools and `sed -i` can leave LF; fix before committing. Do not change `.gitattributes` or git config.
 - File-scoped namespaces everywhere (`IDE0161` is a build error).
 
-## Consumer: MyChess
+## Consumer: E2e4.Chess
 
 `E2e4.Chess.Fics.Client.Demo` (WPF) takes this package; it supplies the timeseal codec from the OpenSeal package (`OpenSealCodec`), so only that built demo is GPL.
-After a release, MyChess bumps the version in its `Directory.Packages.props`. MyChess's own tests use a fake client, so a break here will not show up there.
+After a release, E2e4.Chess bumps the version in its `Directory.Packages.props`. E2e4.Chess's own tests use a fake client, so a break here will not show up there.
