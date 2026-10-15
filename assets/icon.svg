@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- The E2e4.Chess base icon: a dark frame, a 4x4 board with the corner squares highlighted, and a centred pawn.
+     Every E2e4.Chess package icon is this base plus one badge (see badges/ and Build-Icons.ps1), so they read as one family.
+     Only rect, circle, ellipse and path elements with fill, fill-opacity, stroke, stroke-width, stroke-linejoin and
+     stroke-linecap are used, so Build-Icons.ps1 can rasterise it with WPF. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect x="0" y="0" width="256" height="256" rx="44" fill="#4a3426" />
+  <rect x="28" y="28" width="50" height="50" fill="#eeeed2" />
+  <rect x="78" y="28" width="50" height="50" fill="#769656" />
+  <rect x="128" y="28" width="50" height="50" fill="#eeeed2" />
+  <rect x="178" y="28" width="50" height="50" fill="#769656" />
+  <rect x="28" y="78" width="50" height="50" fill="#769656" />
+  <rect x="78" y="78" width="50" height="50" fill="#eeeed2" />
+  <rect x="128" y="78" width="50" height="50" fill="#769656" />
+  <rect x="178" y="78" width="50" height="50" fill="#eeeed2" />
+  <rect x="28" y="128" width="50" height="50" fill="#eeeed2" />
+  <rect x="78" y="128" width="50" height="50" fill="#769656" />
+  <rect x="128" y="128" width="50" height="50" fill="#eeeed2" />
+  <rect x="178" y="128" width="50" height="50" fill="#769656" />
+  <rect x="28" y="178" width="50" height="50" fill="#769656" />
+  <rect x="78" y="178" width="50" height="50" fill="#eeeed2" />
+  <rect x="128" y="178" width="50" height="50" fill="#769656" />
+  <rect x="178" y="178" width="50" height="50" fill="#eeeed2" />
+  <rect x="28" y="28" width="50" height="50" fill="#f6f669" fill-opacity="0.65" />
+  <rect x="178" y="178" width="50" height="50" fill="#f6f669" fill-opacity="0.65" />
+  <!-- Pawn, vertically centred on the board (its outline spans y 55 to 201): dark outline pass, then white fill pass. -->
+  <path d="M106 179 C106 145 114 133 128 117 C142 133 150 145 150 179 Z" fill="#222222" stroke="#222222" stroke-width="12" stroke-linejoin="round" />
+  <rect x="104" y="111" width="48" height="14" rx="7" fill="#222222" stroke="#222222" stroke-width="12" stroke-linejoin="round" />
+  <circle cx="128" cy="85" r="24" fill="#222222" stroke="#222222" stroke-width="12" stroke-linejoin="round" />
+  <rect x="92" y="175" width="72" height="20" rx="10" fill="#222222" stroke="#222222" stroke-width="12" stroke-linejoin="round" />
+  <path d="M106 179 C106 145 114 133 128 117 C142 133 150 145 150 179 Z" fill="#ffffff" />
+  <rect x="104" y="111" width="48" height="14" rx="7" fill="#ffffff" />
+  <circle cx="128" cy="85" r="24" fill="#ffffff" />
+  <rect x="92" y="175" width="72" height="20" rx="10" fill="#ffffff" />
+  <!-- Badge: E2e4.Chess.Fics.Client (from Branding\badges) -->
+  <circle cx="208" cy="208" r="40" fill="#4a3426" />
+  <circle cx="208" cy="208" r="34" fill="#2f7fc1" />
+  <circle cx="208" cy="208" r="21" fill="none" stroke="#ffffff" stroke-width="4" />
+  <ellipse cx="208" cy="208" rx="9" ry="21" fill="none" stroke="#ffffff" stroke-width="3.5" />
+  <path d="M187 208 L229 208" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" />
+</svg>
