@@ -5,6 +5,8 @@ name: Publish
 on:
   push:
     tags: [ 'v*' ]
+  # A manual run only checks that nuget.org still accepts this repository (Trusted Publishing login); it never packs or pushes.
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -19,14 +21,17 @@ jobs:
         with:
           dotnet-version: 10.0.x
       - name: Check the tag is a version
+        if: github.event_name == 'push'
         run: |
           if ! [[ "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
             echo "Tag $GITHUB_REF_NAME is not of the form vX.Y.Z"
             exit 1
           fi
       - name: Test
+        if: github.event_name == 'push'
         run: dotnet test E2e4.Chess.Fics.Client.slnx --configuration Release
       - name: Pack
+        if: github.event_name == 'push'
         run: dotnet pack src/E2e4.Chess.Fics.Client/E2e4.Chess.Fics.Client.csproj --configuration Release -p:Version=${GITHUB_REF_NAME#v} --output artifacts
       # Request the temporary key last: it is valid for one hour.
       - name: NuGet login (OIDC to a temporary API key)
@@ -34,6 +39,10 @@ jobs:
         id: login
         with:
           user: ${{ secrets.NUGET_USER }}
+      - name: Report the login check
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "Trusted Publishing login succeeded for ${GITHUB_REPOSITORY}; nothing was packed or pushed."
       # Pushing the .nupkg also pushes the .snupkg symbol package beside it.
       - name: NuGet push
+        if: github.event_name == 'push'
         run: dotnet nuget push artifacts/*.nupkg --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
