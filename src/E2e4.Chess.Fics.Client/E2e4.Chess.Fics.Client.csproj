@@ -25,12 +25,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
     <None Include="..\..\assets\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="E2e4.Chess.Fics.Client.Test" />
   </ItemGroup>
+
+  <!-- nuget.org drops raw HTML such as the README's <img> icon and shows it as text, so the packed README is a copy without that line (GitHub keeps it). -->
+  <Target Name="PackReadmeWithoutIcon" BeforeTargets="_GetPackageFiles;GenerateNuspec">
+    <PropertyGroup>
+      <PackedReadme>$(MSBuildProjectDirectory)/obj/nuget/README.md</PackedReadme>
+      <PackedReadmeText>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../README.md'))</PackedReadmeText>
+      <PackedReadmeText>$([System.Text.RegularExpressions.Regex]::Replace('$(PackedReadmeText)', '(?m)^&lt;img [^\r\n]*\r?\n', ''))</PackedReadmeText>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(PackedReadme)" Lines="$([MSBuild]::Escape('$(PackedReadmeText)'))" Overwrite="true" />
+    <ItemGroup>
+      <None Include="$(PackedReadme)" Pack="true" PackagePath="\" />
+    </ItemGroup>
+  </Target>
 
 </Project>
