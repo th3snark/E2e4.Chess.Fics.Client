@@ -37,7 +37,7 @@
     <PropertyGroup>
       <PackedReadme>$(MSBuildProjectDirectory)/obj/nuget/README.md</PackedReadme>
       <PackedReadmeText>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../README.md'))</PackedReadmeText>
-      <PackedReadmeText>$([System.Text.RegularExpressions.Regex]::Replace('$(PackedReadmeText)', '(?m)^&lt;img [^\r\n]*\r?\n', ''))</PackedReadmeText>
+      <PackedReadmeText>$([System.Text.RegularExpressions.Regex]::Replace('$(PackedReadmeText)', '(?m)^&lt;img [^\r\n]*\r?\n(\r?\n)?', ''))</PackedReadmeText>
     </PropertyGroup>
     <WriteLinesToFile File="$(PackedReadme)" Lines="$([MSBuild]::Escape('$(PackedReadmeText)'))" Overwrite="true" />
     <ItemGroup>
