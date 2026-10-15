@@ -1,5 +1,7 @@
 # E2e4.Chess.Fics.Client
 
+<img src="assets/icon.png" alt="E2e4.Chess.Fics.Client icon" width="96" height="96" align="right">
+
 A cross-platform (`net10.0`) client library for the [Free Internet Chess Server](https://www.freechess.org) (FICS):
 `System.IO.Pipelines` framing, a typed message parser, style-12 board parsing, an `IFicsTransport` seam over TCP and
 an optional, pluggable timeseal codec. Install from NuGet: `E2e4.Chess.Fics.Client`.
