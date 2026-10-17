@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using System.Text;
 
@@ -67,7 +68,7 @@ public sealed class Style12
     public int LagMilliseconds { get; init; }
     public string UnparsedText { get; init; } = "";
 
-    public static bool TryParse(string line, out Style12? result)
+    public static bool TryParse(string line, [NotNullWhen(true)] out Style12? result)
     {
         result = null;
         if (string.IsNullOrEmpty(line))

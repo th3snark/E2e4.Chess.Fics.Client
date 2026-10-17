@@ -42,18 +42,20 @@ public static partial class FicsMessageParser
     /// </summary>
     internal const int MaxLineLength = 8192;
 
+    private static UnknownLineMessage Unknown(string line) => new() { RawText = line };
+
     public static FicsMessage Parse(string line)
     {
         if (line.Length > MaxLineLength)
         {
-            return new UnknownLineMessage { RawText = line };
+            return Unknown(line);
         }
 
         if (line.StartsWith("<12> ", StringComparison.Ordinal))
         {
             return Style12.TryParse(line, out Style12? board)
-                ? new Style12Message { RawText = line, Board = board! }
-                : new UnknownLineMessage { RawText = line };
+                ? new Style12Message { RawText = line, Board = board }
+                : Unknown(line);
         }
 
         if (line.StartsWith("<g1> ", StringComparison.Ordinal))
@@ -96,7 +98,7 @@ public static partial class FicsMessageParser
                 return new PendingRemovedMessage { RawText = line, Index = prIndex };
             }
 
-            return new UnknownLineMessage { RawText = line };
+            return Unknown(line);
         }
 
         if (line.StartsWith("<wa> ", StringComparison.Ordinal) ||
@@ -112,7 +114,7 @@ public static partial class FicsMessageParser
             {
                 if (!FicsNumber.TryParse(game.Groups["num"].Value, out int gameNumber))
                 {
-                    return new UnknownLineMessage { RawText = line };
+                    return Unknown(line);
                 }
 
                 string white = game.Groups["white"].Value;
@@ -140,7 +142,7 @@ public static partial class FicsMessageParser
                     };
             }
 
-            return new UnknownLineMessage { RawText = line };
+            return Unknown(line);
         }
 
         if (line.StartsWith("Challenge: ", StringComparison.Ordinal))
@@ -157,7 +159,7 @@ public static partial class FicsMessageParser
         // (games lists, who output, ...) can skip the regexes altogether.
         if (!line.Contains(": ", StringComparison.Ordinal) && !line.StartsWith("--> ", StringComparison.Ordinal))
         {
-            return new UnknownLineMessage { RawText = line };
+            return Unknown(line);
         }
 
         Match announcement = AnnouncementRegex().Match(line);
@@ -188,7 +190,7 @@ public static partial class FicsMessageParser
         {
             if (!FicsNumber.TryParse(kibitzWhisper.Groups["game"].Value, out int gameNumber))
             {
-                return new UnknownLineMessage { RawText = line };
+                return Unknown(line);
             }
 
             string handle = kibitzWhisper.Groups["handle"].Value;
@@ -205,7 +207,7 @@ public static partial class FicsMessageParser
         {
             if (!FicsNumber.TryParse(channelTell.Groups["channel"].Value, out int channel))
             {
-                return new UnknownLineMessage { RawText = line };
+                return Unknown(line);
             }
 
             return new ChannelTellMessage
@@ -244,7 +246,7 @@ public static partial class FicsMessageParser
             };
         }
 
-        return new UnknownLineMessage { RawText = line };
+        return Unknown(line);
     }
 
     /// <summary>Splits "key=value" tokens; the p= value of pendinfo runs to end of line.</summary>
@@ -281,13 +283,13 @@ public static partial class FicsMessageParser
         string[] tokens = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         if (tokens.Length < 3 || !FicsNumber.TryParse(tokens[1], out int index))
         {
-            return new UnknownLineMessage { RawText = line };
+            return Unknown(line);
         }
 
         Dictionary<string, string> pairs = ParseKeyValueTokens(tokens, 2);
         if (!pairs.TryGetValue("w", out string? handle))
         {
-            return new UnknownLineMessage { RawText = line };
+            return Unknown(line);
         }
 
         // A missing or malformed time or increment is 0.
@@ -328,7 +330,7 @@ public static partial class FicsMessageParser
 
         return ids.Count > 0
             ? new SeekRemovedMessage { RawText = line, Ids = ids.ToArray() }
-            : new UnknownLineMessage { RawText = line };
+            : Unknown(line);
     }
 
     private static FicsMessage ParsePendingOffer(string line)
@@ -336,13 +338,13 @@ public static partial class FicsMessageParser
         string[] tokens = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         if (tokens.Length < 3 || !FicsNumber.TryParse(tokens[1], out int index))
         {
-            return new UnknownLineMessage { RawText = line };
+            return Unknown(line);
         }
 
         Dictionary<string, string> pairs = ParseKeyValueTokens(tokens, 2, tailKey: "p");
         if (!pairs.TryGetValue("w", out string? handle))
         {
-            return new UnknownLineMessage { RawText = line };
+            return Unknown(line);
         }
 
         return new PendingOfferMessage
@@ -361,7 +363,7 @@ public static partial class FicsMessageParser
         string[] tokens = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         if (tokens.Length < 2)
         {
-            return new UnknownLineMessage { RawText = line };
+            return Unknown(line);
         }
 
         return tokens[0] == "<wa>"
@@ -379,7 +381,7 @@ public static partial class FicsMessageParser
         string[] tokens = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         if (tokens.Length < 2 || !FicsNumber.TryParse(tokens[1], out int gameNumber))
         {
-            return new UnknownLineMessage { RawText = line };
+            return Unknown(line);
         }
 
         return new GameInfoMessage
@@ -404,6 +406,6 @@ public static partial class FicsMessageParser
             }
         }
 
-        return new UnknownLineMessage { RawText = line };
+        return Unknown(line);
     }
 }

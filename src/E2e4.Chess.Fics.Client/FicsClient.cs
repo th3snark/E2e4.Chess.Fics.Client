@@ -14,8 +14,8 @@ namespace E2e4.Chess.Fics.Client;
 /// framing of the interleaved server output into typed messages, and (in block
 /// mode) request/response correlation.
 ///
-/// Events are raised on the read-loop thread; WPF hosts must marshal to their
-/// Dispatcher. An exception thrown by an event subscriber is contained: it never
+/// Events are raised on the read-loop thread; UI hosts (WPF, WinForms) must marshal to their
+/// UI thread. An exception thrown by an event subscriber is contained: it never
 /// reaches the read loop or other subscribers. The same message stream is also
 /// available as <see cref="ReadAllMessagesAsync"/> for await-foreach consumers.
 ///
@@ -577,7 +577,7 @@ public sealed partial class FicsClient : IFicsClient
 
                 while (_tokenizer.TryReadFrame(ref buffer, out FicsFrame? frame))
                 {
-                    await DispatchAsync(frame!, cancellationToken).ConfigureAwait(false);
+                    await DispatchAsync(frame, cancellationToken).ConfigureAwait(false);
                 }
 
                 input.AdvanceTo(buffer.Start, buffer.End);
