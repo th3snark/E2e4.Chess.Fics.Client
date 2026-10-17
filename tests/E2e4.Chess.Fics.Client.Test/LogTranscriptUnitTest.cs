@@ -7,7 +7,7 @@ using Xunit;
 namespace E2e4.Chess.Fics.Client.Test;
 
 /// <summary>
-/// Replays the captured FICS session transcripts (the Fixtures folder) through the tokenizer
+/// Replays the synthetic FICS-style session transcripts (the Fixtures folder) through the tokenizer
 /// and parser. The logs are terminal transcripts written by an earlier test harness, so the
 /// wire form has to be reconstructed: strip the UTF-8 BOM and the harness-injected ". "
 /// annotation lines, and turn "\r\n" back into the "\n\r" FICS actually sends.

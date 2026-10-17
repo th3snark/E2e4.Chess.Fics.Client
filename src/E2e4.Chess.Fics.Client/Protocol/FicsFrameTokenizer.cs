@@ -1,4 +1,5 @@
 using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 
@@ -73,7 +74,7 @@ public sealed class FicsFrameTokenizer
     }
 
     /// <exception cref="InvalidDataException">A frame has grown beyond <see cref="MaxFrameLength"/> without completing.</exception>
-    public bool TryReadFrame(ref ReadOnlySequence<byte> buffer, out FicsFrame? frame)
+    public bool TryReadFrame(ref ReadOnlySequence<byte> buffer, [NotNullWhen(true)] out FicsFrame? frame)
     {
         Ingest(ref buffer);
         if (TryExtractFrame(out frame))
@@ -207,7 +208,7 @@ public sealed class FicsFrameTokenizer
         AppendPending(b);
     }
 
-    private bool TryExtractFrame(out FicsFrame? frame)
+    private bool TryExtractFrame([NotNullWhen(true)] out FicsFrame? frame)
     {
         frame = null;
         Span<byte> span = Pending;
@@ -254,6 +255,12 @@ public sealed class FicsFrameTokenizer
         // the same read must not merge into it.
         foreach (string prompt in _prompts)
         {
+            // An empty prompt would match everywhere and consume nothing, so the caller would spin.
+            if (string.IsNullOrEmpty(prompt))
+            {
+                continue;
+            }
+
             if (StartsWith(span, prompt))
             {
                 frame = FicsFrame.Prompt(prompt);
@@ -321,7 +328,7 @@ public sealed class FicsFrameTokenizer
         return true;
     }
 
-    private bool TryExtractBlockFrame(Span<byte> span, out FicsFrame? frame)
+    private bool TryExtractBlockFrame(Span<byte> span, [NotNullWhen(true)] out FicsFrame? frame)
     {
         frame = null;
         byte endMarker = span[0] == BlockConstants.BlockStart

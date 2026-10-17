@@ -36,6 +36,13 @@ public sealed class FicsClientOptions
     /// </summary>
     public TimeSpan NegotiationTimeout { get; set; } = TimeSpan.FromSeconds(3);
 
+    /// <summary>
+    /// How long <see cref="FicsClient.LoginAsync"/> may take in all (prompts, password and negotiation) before it
+    /// fails with a <see cref="TimeoutException"/> and closes the connection. Use
+    /// <see cref="Timeout.InfiniteTimeSpan"/> to wait for ever.
+    /// </summary>
+    public TimeSpan LoginTimeout { get; set; } = TimeSpan.FromSeconds(60);
+
     /// <summary>Negotiate "iset pin 1" for &lt;wa&gt;/&lt;wd&gt; player arrival/departure notifications.</summary>
     public bool EnablePin { get; set; }
 

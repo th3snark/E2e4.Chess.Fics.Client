@@ -40,10 +40,10 @@ Publishing. The csproj intentionally has no fixed `Version`. Do not tag or publi
 
 - `assets/icon.png` (and its source `assets/icon.svg`) is generated, not hand-drawn: it is the E2e4.Chess base icon plus this package's badge, built by `Branding/Build-Icons.ps1` in the E2e4.Chess repository. Change the icon there and copy the files from `Branding/dist`.
 - `Directory.Build.props`: `Nullable`, `AnalysisLevel latest-recommended`, `GenerateDocumentationFile`, `TreatWarningsAsErrors`, `EnforceCodeStyleInBuild`. The tree builds with 0 warnings. Versions are central in `Directory.Packages.props`.
-- Line endings are CRLF (`.editorconfig`). Write/Edit tools and `sed -i` can leave LF; fix before committing. Do not change `.gitattributes` or git config.
+- Line endings are CRLF (`.editorconfig`). Write/Edit tools and `sed -i` can leave LF; fix before committing. `.gitattributes` is the family standard, identical in every E2e4.Chess repository (change it in all of them together); do not change git config.
 - File-scoped namespaces everywhere (`IDE0161` is a build error).
 
-## Consumer: E2e4.Chess
+## Consumers
 
-`E2e4.Chess.Fics.Client.Demo` (WPF) takes this package; it supplies the timeseal codec from the OpenSeal package (`OpenSealCodec`), so only that built demo is GPL.
-After a release, E2e4.Chess bumps the version in its `Directory.Packages.props`. E2e4.Chess's own tests use a fake client, so a break here will not show up there.
+`E2e4.Chess.Fics.Client.Demo` (private WPF app) takes this package; it supplies the timeseal codec from the OpenSeal package (`OpenSealCodec`), so only that built demo is GPL.
+After a release, bump the version in the demo's `Directory.Packages.props`. The demo's own tests use a fake client, so a break here will not show up there.

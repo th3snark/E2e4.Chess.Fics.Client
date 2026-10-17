@@ -4,7 +4,7 @@ namespace E2e4.Chess.Fics.Client.Test;
 
 /// <summary>
 /// Canned protocol samples. Wire lines from FICS are terminated "\n\r"; the
-/// real lines below are lifted from the captured session transcripts in
+/// lines below are taken from the synthetic session transcripts in
 /// the Fixtures folder (copied to the output directory at build time).
 /// </summary>
 internal static class FicsTestData

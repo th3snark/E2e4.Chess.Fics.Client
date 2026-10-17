@@ -4,7 +4,7 @@ namespace E2e4.Chess.Fics.Protocol;
 /// Control characters framing "iset block 1" command responses:
 /// BLOCK_START id BLOCK_SEPARATOR code BLOCK_SEPARATOR output BLOCK_END.
 /// Server-initiated (posed) output uses BLOCK_POSE_START/END with id 0.
-/// See FICS "help iv_block".
+/// See FICS "help block".
 /// </summary>
 internal static class BlockConstants
 {

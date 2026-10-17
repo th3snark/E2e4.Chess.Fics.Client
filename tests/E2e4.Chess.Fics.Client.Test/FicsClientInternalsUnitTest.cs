@@ -180,6 +180,7 @@ public class FicsLineEncoderUnitTest
     [InlineData("tell 1 hi\rquit")]
     [InlineData("finger\0")]
     [InlineData("\n")]
+    [InlineData("say hi \u00FF")]   // 0xFF on the wire is Telnet IAC
     public void ALineBreakingOutOfItsLineIsRejectedBeforeAnythingIsSent(string line)
     {
         Assert.Throws<ArgumentException>(nameof(line), () => FicsLineEncoder.Encode(line, timeseal: null));
