@@ -40,7 +40,7 @@ Publishing. The csproj intentionally has no fixed `Version`. Do not tag or publi
 
 - `assets/icon.png` (and its source `assets/icon.svg`) is generated, not hand-drawn: it is the E2e4.Chess base icon plus this package's badge, built by `Branding/Build-Icons.ps1` in the E2e4.Chess repository. Change the icon there and copy the files from `Branding/dist`.
 - `Directory.Build.props`: `Nullable`, `AnalysisLevel latest-recommended`, `GenerateDocumentationFile`, `TreatWarningsAsErrors`, `EnforceCodeStyleInBuild`. The tree builds with 0 warnings. Versions are central in `Directory.Packages.props`.
-- Line endings are CRLF (`.editorconfig`). Write/Edit tools and `sed -i` can leave LF; fix before committing. Do not change `.gitattributes` or git config.
+- Line endings are CRLF (`.editorconfig`). Write/Edit tools and `sed -i` can leave LF; fix before committing. `.gitattributes` is the family standard, identical in every E2e4.Chess repository (change it in all of them together); do not change git config.
 - File-scoped namespaces everywhere (`IDE0161` is a build error).
 
 ## Consumers
