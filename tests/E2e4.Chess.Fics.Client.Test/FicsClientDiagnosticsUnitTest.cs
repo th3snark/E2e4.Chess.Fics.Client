@@ -85,7 +85,7 @@ public class FicsClientDiagnosticsUnitTest
         ManualTimeProvider time = new();
         FakeFicsServer server = new();
         await using FicsClient client = new(
-            new FicsClientOptions { NegotiationTimeout = TimeSpan.FromHours(1), TimeProvider = time },
+            new FicsClientOptions { NegotiationTimeout = TimeSpan.FromHours(1), LoginTimeout = Timeout.InfiniteTimeSpan, TimeProvider = time },
             server.Transport);
         await client.ConnectAsync();
         await server.SendAsync("login: ");
@@ -107,6 +107,27 @@ public class FicsClientDiagnosticsUnitTest
 
         Assert.Equal("GuestTEST", await Soon(login));
         Assert.Equal(FicsClientState.Ready, client.State);
+    }
+
+    [Fact]
+    public async Task ASilentServerFailsLoginWithATimeoutAndClosesTheConnection()
+    {
+        ManualTimeProvider time = new();
+        FakeFicsServer server = new();
+        await using FicsClient client = new(
+            new FicsClientOptions { LoginTimeout = TimeSpan.FromSeconds(5), TimeProvider = time },
+            server.Transport);
+        await client.ConnectAsync();
+        await server.SendAsync("login: ");
+        Task<string> login = client.LoginAsGuestAsync();
+        await Soon(server.ReadLineAsync());
+
+        // The server never sends the password prompt or banner, so login waits on the (manual) timeout timer.
+        Assert.True(SpinWait.SpinUntil(() => time.PendingTimers > 0, Patience));
+        time.FireAll();
+
+        await Assert.ThrowsAsync<TimeoutException>(() => Soon(login));
+        Assert.Equal(FicsClientState.Disconnected, client.State);
     }
 
     private sealed class RefusingTransport : Transport.IFicsTransport

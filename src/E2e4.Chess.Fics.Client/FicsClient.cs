@@ -41,6 +41,9 @@ public sealed partial class FicsClient : IFicsClient
     [GeneratedRegex(@"^\*\*\*\* Invalid password! \*\*\*\*")]
     private static partial Regex InvalidPasswordRegex();
 
+    // Bounds the lines kept for a command whose response never completes.
+    private const int MaxPendingLines = 10_000;
+
     private readonly FicsClientOptions _options;
     private readonly IFicsTransport _transport;
     private readonly FicsFrameTokenizer _tokenizer = new();
@@ -224,9 +227,20 @@ public sealed partial class FicsClient : IFicsClient
             throw new InvalidOperationException($"Cannot log in while {State}.");
         }
 
+        using CancellationTokenSource timeout = _options.LoginTimeout == Timeout.InfiniteTimeSpan
+            ? new CancellationTokenSource()
+            : new CancellationTokenSource(_options.LoginTimeout, _options.TimeProvider);
+        using CancellationTokenSource linked = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeout.Token);
+
         try
         {
-            return await LoginCoreAsync(user, password, cancellationToken).ConfigureAwait(false);
+            return await LoginCoreAsync(user, password, linked.Token).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException) when (timeout.IsCancellationRequested && !cancellationToken.IsCancellationRequested)
+        {
+            _options.Logger.LogDebug("Login timed out after {Timeout}; closing the connection", _options.LoginTimeout);
+            await CloseAfterFailureAsync().ConfigureAwait(false);
+            throw new TimeoutException($"Login did not complete within {_options.LoginTimeout}.");
         }
         catch (Exception ex)
         {
@@ -278,7 +292,10 @@ public sealed partial class FicsClient : IFicsClient
 
         State = FicsClientState.Negotiating;
         await NegotiateAsync(negotiationCommands, cancellationToken).ConfigureAwait(false);
-        State = FicsClientState.Ready;
+        if (!TryTransition(FicsClientState.Negotiating, FicsClientState.Ready))
+        {
+            throw new FicsException("The connection closed during login.");
+        }
 
         return name;
     }
@@ -660,7 +677,7 @@ public sealed partial class FicsClient : IFicsClient
         string text = string.Join("\n", pending.Lines);
         List<FicsMessage> messages = pending.Lines
             .Where(line => line.Length > 0)
-            .Select(FicsMessageParser.Parse)
+            .Select(ParseLine)
             .ToList();
         pending.Completion.TrySetResult(new FicsResponse(0, 0, text, messages));
     }
@@ -673,7 +690,7 @@ public sealed partial class FicsClient : IFicsClient
             string trimmed = line.TrimEnd('\r');
             if (trimmed.Length > 0)
             {
-                messages.Add(FicsMessageParser.Parse(trimmed));
+                messages.Add(ParseLine(trimmed));
             }
         }
 
@@ -703,6 +720,20 @@ public sealed partial class FicsClient : IFicsClient
         }
     }
 
+    /// <summary>Parses one line; a parser fault becomes an unknown line instead of ending the session.</summary>
+    private FicsMessage ParseLine(string line)
+    {
+        try
+        {
+            return FicsMessageParser.Parse(line);
+        }
+        catch (Exception ex)
+        {
+            _options.Logger.LogDebug(ex, "The parser failed on a line; treating it as unknown");
+            return new UnknownLineMessage { RawText = line };
+        }
+    }
+
     private void DispatchLine(string line)
     {
         if ((State is FicsClientState.AwaitingLogin or FicsClientState.LoggingIn) && TryHandleLoginLine(line))
@@ -712,12 +743,15 @@ public sealed partial class FicsClient : IFicsClient
 
         lock (_pendingGate)
         {
-            _pending?.Lines.Add(line);
+            if (_pending is { } pending && pending.Lines.Count < MaxPendingLines)
+            {
+                pending.Lines.Add(line);
+            }
         }
 
         if (line.Length > 0)
         {
-            PublishMessage(FicsMessageParser.Parse(line));
+            PublishMessage(ParseLine(line));
         }
     }
 
