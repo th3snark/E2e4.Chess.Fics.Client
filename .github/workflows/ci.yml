@@ -33,6 +33,15 @@ jobs:
         run: dotnet format whitespace E2e4.Chess.Fics.Client.slnx --verify-no-changes
       - name: Test
         run: dotnet test E2e4.Chess.Fics.Client.slnx --configuration Release
+      - name: Check for vulnerable packages
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          dotnet list E2e4.Chess.Fics.Client.slnx package --vulnerable --include-transitive 2>&1 | tee vulnerable.txt
+          if grep -q 'has the following vulnerable packages' vulnerable.txt; then
+            echo 'A dependency has a known vulnerability.'
+            exit 1
+          fi
       - name: No GPL dependency (OpenSeal) in the library
         if: runner.os == 'Linux'
         run: |
