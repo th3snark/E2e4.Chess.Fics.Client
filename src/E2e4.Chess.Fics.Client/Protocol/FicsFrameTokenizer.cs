@@ -254,6 +254,12 @@ public sealed class FicsFrameTokenizer
         // the same read must not merge into it.
         foreach (string prompt in _prompts)
         {
+            // An empty prompt would match everywhere and consume nothing, so the caller would spin.
+            if (string.IsNullOrEmpty(prompt))
+            {
+                continue;
+            }
+
             if (StartsWith(span, prompt))
             {
                 frame = FicsFrame.Prompt(prompt);
