@@ -32,12 +32,14 @@
     <InternalsVisibleTo Include="E2e4.Chess.Fics.Client.Test" />
   </ItemGroup>
 
-  <!-- nuget.org drops raw HTML such as the README's <img> icon and shows it as text, so the packed README is a copy without that line (GitHub keeps it). -->
-  <Target Name="PackReadmeWithoutIcon" BeforeTargets="_GetPackageFiles;GenerateNuspec">
+  <!-- nuget.org renders neither raw HTML nor relative paths, and shows images only from allowed hosts (raw.githubusercontent.com is one).
+       The packed README is a copy whose icon <img> is a Markdown image on a raw URL pinned to the release tag (GitHub keeps the original). -->
+  <Target Name="PackReadme" BeforeTargets="_GetPackageFiles;GenerateNuspec">
     <PropertyGroup>
-      <PackedReadme>$(MSBuildProjectDirectory)/obj/nuget/README.md</PackedReadme>
+      <RepoRaw>https://raw.githubusercontent.com/th3snark/E2e4.Chess.Fics.Client/v$(Version)/</RepoRaw>
+      <PackedReadme>$(MSBuildProjectDirectory)/$(IntermediateOutputPath)nuget/README.md</PackedReadme>
       <PackedReadmeText>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../../README.md'))</PackedReadmeText>
-      <PackedReadmeText>$([System.Text.RegularExpressions.Regex]::Replace('$(PackedReadmeText)', '(?m)^&lt;img [^\r\n]*\r?\n(\r?\n)?', ''))</PackedReadmeText>
+      <PackedReadmeText>$([System.Text.RegularExpressions.Regex]::Replace('$(PackedReadmeText)', '(?m)^&lt;img src="([^"]+)" alt="([^"]*)"[^\r\n]*', '![$2]($(RepoRaw)$1)'))</PackedReadmeText>
     </PropertyGroup>
     <WriteLinesToFile File="$(PackedReadme)" Lines="$([MSBuild]::Escape('$(PackedReadmeText)'))" Overwrite="true" />
     <ItemGroup>
