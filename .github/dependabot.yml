@@ -7,6 +7,11 @@ updates:
     groups:
       nuget:
         patterns: [ "*" ]
+    ignore:
+      # The net10.0 build depends on the 10.0.x Microsoft.Extensions packages (net11.0 gets them from the shared framework).
+      # A major bump would force 11.0 packages on net10.0 consumers, so move the major version only with the TFMs.
+      - dependency-name: "Microsoft.Extensions.*"
+        update-types: [ "version-update:semver-major" ]
   - package-ecosystem: github-actions
     directory: /
     schedule:
